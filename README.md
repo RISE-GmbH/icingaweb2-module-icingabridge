@@ -29,7 +29,7 @@ systems.
 - Icinga Web 2 (>= 2.10.3)
 - Icinga Director (>= 1.9.1)
 - PHP (>= 7.3)
-- The Icinga Web 2 `monitoring` module configured and enabled
+- The Icinga Web 2 `monitoring` or `icingadb` module configured and enabled
 
 ## Installation
 
