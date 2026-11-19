@@ -26,9 +26,10 @@ systems.
 
 ## Requirements
 
-- Icinga Web 2 (>= 2.10.3)
-- Icinga Director (>= 1.9.1)
-- PHP (>= 7.3)
+- Icinga Web 2 (>= 2.14.1)
+- IcingaDB Web 1.1.3 - 1.4.0, 1.5.0 only with [#1463](https://github.com/Icinga/icingadb-web/pull/1463)
+- Icinga Director (>= 1.9.1) for importing objects
+- PHP (>= 8.3)
 - The Icinga Web 2 `icingadb` module configured and enabled
 
 ## Installation
