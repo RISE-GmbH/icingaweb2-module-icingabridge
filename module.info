@@ -1,0 +1,5 @@
+Name: icingabridge
+Version: 0.2.8
+
+Description: icingabridge
+ This module bridges provides the capability of bridging independent icinga instances via icinga2 api or icingadb-web api

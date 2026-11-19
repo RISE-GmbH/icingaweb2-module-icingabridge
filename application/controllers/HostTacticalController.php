@@ -1,0 +1,37 @@
+<?php
+// SPDX-FileCopyrightText: 2026 Research Industrial Systems Engineering (RISE) Forschungs-, Entwicklungs- und Großprojektberatung GmbH
+// SPDX-FileCopyrightText: 2019 Icinga GmbH <https://icinga.com>
+// SPDX-License-Identifier: GPL-3.0-or-later
+
+
+namespace Icinga\Module\Icingabridge\Controllers;
+
+
+use Icinga\Module\Icingabridge\Web\Controller;
+use Icinga\Module\Icingadb\Widget\HostSummaryDonut;
+use ipl\Web\Filter\QueryString;
+
+
+class HostTacticalController extends Controller
+{
+
+    public function indexAction()
+    {
+        $this->addTitleTab(t('Host Summary'));
+
+
+        $this->params->shift('sort');
+
+        $query = QueryString::render($this->getFilter());
+
+        list($hoststateSummary,) = $this->helper->fetchTactical($query);
+
+        $this->addContent(
+            ((new HostSummaryDonut($hoststateSummary))->setBaseFilter($this->getFilter()))
+        );
+
+        $this->setAutorefreshInterval(10);
+    }
+
+
+}

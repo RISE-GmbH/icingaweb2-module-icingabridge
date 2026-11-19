@@ -1,0 +1,66 @@
+<?php
+
+use Icinga\Module\Icingabridge\InstanceIniRepository;
+use Icinga\Repository\RepositoryQuery;
+use Icinga\Web\Widget\Tabs;
+
+$identifier = (new InstanceIniRepository())->getIdentifierName();
+?>
+<div class="controls">
+    <?= /** @var Tabs $tabs */
+    $tabs ?>
+</div>
+<div class="content">
+    <div class="actions">
+        <?= $this->qlink(
+                $this->translate('Create a New Instance'),
+                'icingabridge/instance/new',
+                null,
+                [
+                        'class' => 'button-link',
+                        'data-base-target' => '_next',
+                        'icon' => 'plus',
+                        'title' => $this->translate('Create a New Job')
+                ]
+        ) ?>
+    </div>
+    <?php
+    /** @var RepositoryQuery $configs */
+
+    if (!$configs->hasResult()): ?>
+        <p><?= $this->escape($this->translate('No Instance configured yet.')) ?></p>
+    <?php
+    else: ?>
+        <table class="common-table table-row-selectable" data-base-target="_next">
+            <thead>
+            <tr>
+                <th><?= $this->escape($this->translate('Name')) ?></th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php
+            foreach ($configs as $config): ?>
+                <tr>
+                    <td><?= $this->qlink(
+                                $config->{$identifier},
+                                'icingabridge/instance/update',
+                                ['id' => $config->{$identifier}]
+                        ) ?></td>
+                    <td class="icon-col"><?= $this->qlink(
+                                null,
+                                'icingabridge/instance/delete',
+                                array('id' => $config->{$identifier}),
+                                array(
+                                        'class' => 'action-link',
+                                        'icon' => 'cancel',
+                                        'title' => $this->translate('Remove this Instance')
+                                )
+                        ) ?></td>
+                </tr>
+            <?php
+            endforeach ?>
+            </tbody>
+        </table>
+    <?php
+    endif ?>
+</div>

@@ -1,0 +1,64 @@
+<?php
+
+use Icinga\Module\Icingabridge\InstanceIniRepository;
+use Icinga\Repository\RepositoryQuery;
+
+$identifier = (new InstanceIniRepository())->getIdentifierName();
+?>
+<?php
+if (!$this->compact): ?>
+    <div class="controls">
+        <?= $this->tabs ?>
+    </div>
+<?php
+endif ?>
+<div class="content">
+    <div class="actions">
+        <?= $this->qlink(
+                $this->translate('Create a New Instance'),
+                'icingabridge/instance/new',
+                null,
+                [
+                        'class' => 'button-link',
+                        'data-base-target' => '_next',
+                        'icon' => 'plus',
+                        'title' => $this->translate('Create a new Instance')
+                ]
+        ) ?>
+    </div>
+    <?php
+    /** @var RepositoryQuery $configs */
+
+    if (!$configs->hasResult()): ?>
+        <p><?= $this->escape($this->translate('No Instance configured yet.')) ?></p>
+    <?php
+    else: ?>
+        <div class="grid">
+            <?php
+            foreach ($configs as $config): ?>
+                <div class="grid-item">
+                    <h2 class="grid-item-header"><?= $this->escape($config->{$identifier}) ?></h2>
+                    <dl>
+                        <dt><?= $this->translate('Name') ?></dt>
+                        <dd><?= $this->escape($config->{$identifier}) ?></dd>
+                    </dl>
+                    <?= $this->qlink(
+                            $this->translate('Update Instance'),
+                            'icingabridge/instance/update',
+                            [
+                                    'id' => $config->{$identifier}
+                            ],
+                            [
+                                    'class' => 'button-link',
+                                    'data-base-target' => '_next',
+                                    'icon' => 'plus',
+                                    'title' => $this->translate('Update Instance')
+                            ]
+                    ) ?>
+                </div>
+            <?php
+            endforeach ?>
+        </div>
+    <?php
+    endif ?>
+</div>
